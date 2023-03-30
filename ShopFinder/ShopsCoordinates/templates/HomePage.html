@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<head>
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<style>
+body{
+    background-color: #cce6ff;
+}
+.top{
+    margin-top:{{ top }}px;
+    margin-left:{{ left }}px;
+}
+.block{
+    margin-top:300px;
+    
+}
+.tet{
+    font-family:ubuntu;
+    text-align:left;
+    padding:10px;
+    
+}
+.ttt{
+    color:royalblue;
+    padding:5px;
+
+}
+.trt{
+    color:red; padding:5px;
+}
+.tst{
+    color:green; padding:5px;
+}
+.txt{
+    color:#475694; padding:5px;
+}
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#" style="color: #04143d;font-family: ubuntu;"><span style="color:red;">Find</span>_<span style="color:royalblue;">Nearby</span>_<span style="color:green;">Shops</span></a>
+   </nav>
+   <div class="top">
+    <form action="{% url 'findShop' %}" method="post">
+         {% csrf_token %} 
+        {{form}}
+        <input type="submit" value="find nearby"/>
+    
+      </form>
+      {% if given %}
+      Given Input </br>
+      Radius {{given.r}} </br>
+      Latitude {{given.lat}} </br>
+      Lontitude {{given.lon}} </br>
+      {% endif %}
+     {% if values %}
+     
+     <div class="block">
+     <table style="width:100%;margin-top:-200px;margin-left:5px;">
+     <tr>
+     <th class="trt">ShopID</th>   
+     <th class="tst">Shop Name</th> 
+     <th class="ttt">Latitude</th> 
+     <th class="txt">Lontitude</th>
+     <th class="txt">Distance (kms)</th> 
+
+        
+
+     </tr>
+     
+    {% for shop in values %}
+    
+    <tr>
+     
+    
+    <th class="tet">{{ shop.shopId}}</th>
+    <th class="tet">{{ shop.shopName}}</th>
+    <th class="tet">{{ shop.latitude}}</th>
+    <th class="tet">{{ shop.longtitude}}</th>
+    <th class="tet">{{ shop.dist}}</th>
+
+  
+    
+    
+    </tr>
+    
+    {% endfor %}
+    </div>
+    {% else %}
+    <h1 style="font-family:ubuntu;margin-top:40px;margin-left:10px;">{{ ww }}</p> 
+    {% endif %} 
+    
+    
+   
+
+</body>
+</html>

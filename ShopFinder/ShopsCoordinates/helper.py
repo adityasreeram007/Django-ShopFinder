@@ -17,7 +17,7 @@ def findInRadius(r,lat,lon,shops):
       c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 
       d = R * c / 1000
-      
+      shop.dist="%.2f" %d
       if d<=r:
          resultSet.append(shop)
    return resultSet

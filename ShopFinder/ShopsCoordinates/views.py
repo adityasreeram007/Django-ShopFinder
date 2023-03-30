@@ -4,6 +4,7 @@ from .models import Shop
 from django.core import serializers
 import json
 from .helper import findInRadius
+from .forms import findWithinRadiusForm
 # Create your views here.
 
 
@@ -15,7 +16,12 @@ def getNearestToRadius(request):
    if request.method == "POST":
       print(request.POST)
       if all(key in request.POST for key in ["r","lat","lon"]):
-         return HttpResponse(serializers.serialize('json',findInRadius(float(request.POST["r"]),float(request.POST["lat"]),float(request.POST["lon"]),Shop.objects.all())),content_type='application/json')
+         # print(serializers.serialize('list',findInRadius(float(request.POST["r"]),float(request.POST["lat"]),float(request.POST["lon"]),Shop.objects.all())))
+         return render(request,'HomePage.html',{"values":findInRadius(float(request.POST["r"]),float(request.POST["lat"]),float(request.POST["lon"]),Shop.objects.all()),"form":findWithinRadiusForm(initial={'r': request.POST['r'],'lat':request.POST['lat'],"lon":request.POST['lon']}),"ww":"Not found"})
+         # return HttpResponse(serializers.serialize('json',findInRadius(float(request.POST["r"]),float(request.POST["lat"]),float(request.POST["lon"]),Shop.objects.all())),content_type='application/json')
+   else:
+      return render(request,'HomePage.html',{'form':findWithinRadiusForm})
+
    return HttpResponse(False)
 
 
